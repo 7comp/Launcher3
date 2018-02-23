@@ -415,7 +415,7 @@
                 android:persistent="false">
                 <intent
                     android:action="android.intent.action.VIEW"
-                    android:data="@string/url_wtu_git" />
+                    android:data="@string/url_git" />
             </Preference>
             <Preference
                 android:title="@string/date"
