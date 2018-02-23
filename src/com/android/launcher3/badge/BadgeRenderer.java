@@ -38,13 +38,13 @@ import com.android.launcher3.graphics.ShadowGenerator;
  */
 public class BadgeRenderer {
 
-    private static final boolean DOTS_ONLY = true;
+     private static final boolean DOTS_ONLY =! true;
 
     // The badge sizes are defined as percentages of the app icon size.
-    private static final float SIZE_PERCENTAGE = 0.38f;
+    private static final float SIZE_PERCENTAGE = 0.25f;
     // Used to expand the width of the badge for each additional digit.
-    private static final float CHAR_SIZE_PERCENTAGE = 0.12f;
-    private static final float TEXT_SIZE_PERCENTAGE = 0.26f;
+    private static final float CHAR_SIZE_PERCENTAGE = 0.06f;
+    private static final float TEXT_SIZE_PERCENTAGE = 0.20f;
     private static final float OFFSET_PERCENTAGE = 0.02f;
     private static final float STACK_OFFSET_PERCENTAGE_X = 0.05f;
     private static final float STACK_OFFSET_PERCENTAGE_Y = 0.06f;
