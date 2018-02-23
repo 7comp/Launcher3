@@ -401,13 +401,13 @@
     <!-- About -->
     <string name="about_sum">Customised Pixel Launcher - AOSP based open-sourse launcher with expanded functional. It is free and does not contain advertising.</string>
     <string name="thanks">Thanks for</string>
-    <string name="sum_thanks">Amir Zaidi (amirzaidi), Lawnchair team (deletescape, paphonb, fonix232, divadsn, Rawi666), ezio84, arco, jrizzoli, nebkat, xyyx, Mazda--, chauek </string>
-    <string name="forgot">Maybe i forgot someone ...</string>
+    <string name="sum_thanks">Amir Zaidi (amirzaidi), whataudoinghere ,Lawnchair team (deletescape, paphonb, fonix232, divadsn, Rawi666), ezio84, arco, jrizzoli, nebkat, xyyx, Mazda--, chauek </string>
+    <string name="forgot">sorry if forgotten someone</string>
     <string name="date">Build date</string>
     <string name="sum_date">22.02.18</string>
     <string name="sum_aboutapp">About this app, version, information</string>
-    <string name="about_app_version_wtu">Version / wtu GitHub</string>
-    <string name="url_wtu_git">https://github.com/whataudoinghere/Launcher3</string>
+    <string name="about_app_version">Version / shubbyfied GitHub</string>
+    <string name="url_git">https://https://github.com/shubhchan/Launcher3</string>
 
     <!-- Reboot -->
     <string name="custom_reboot">Restart Launcher</string>
@@ -467,18 +467,43 @@
     <!-- Colors -->
     <string name="White">White</string>
     <string name="Black">Black</string>
-    <string name="Gray">Gray</string>
-    <string name="Bright_pink">Bright pink</string>
-    <string name="Red">Red</string>
-    <string name="Orange">Orange</string>
-    <string name="Уellow">Уellow</string>
-    <string name="Сhartreuse">Сhartreuse</string>
-    <string name="Green">Green</string>
-    <string name="Spring_green">Spring green</string>
-    <string name="Cyan">Cyan</string>
-    <string name="Azure">Azure</string>
-    <string name="Blue">Blue</string>
+    <string name="Blue_gray1">Blue gray1</string>
+    <string name="Blue_gray2">Blue gray2</string>
+    <string name="Gray1">Gray1</string>
+    <string name="Gray2">Gray2</string>
+    <string name="Brown1">Brown1</string>
+    <string name="Brown2">Brown2</string>
+    <string name="Deep_orange1">Deep orange1</string>
+    <string name="Deep_orange2">Deep orange2</string>
+    <string name="Orange1">Orange1</string>
+    <string name="Orange2">Orange2</string>
+    <string name="Amber1">Amber1</string>
+    <string name="Amber2">Amber2</string>
+    <string name="Yellow1">Уellow1</string>
+    <string name="Yellow2">Уellow2</string>
+    <string name="Lime1">Lime1</string>
+    <string name="Lime2">Lime2</string>
+    <string name="Light_green1">Light green1</string>
+    <string name="Light_green2">Light green2</string>
+    <string name="Green1">Green1</string>
+    <string name="Green2">Green2</string>
+    <string name="Teal1">Teal1</string>
+    <string name="Teal2">Teal2</string>
+    <string name="Cyan1">Cyan1</string>
+    <string name="Cyan2">Cyan2</string>
+    <string name="Light_blue1">Light blue1</string>
+    <string name="Light_blue2">Light blue</string>
+    <string name="Blue1">Blue1</string>
+    <string name="Blue2">Blue2</string>
+    <string name="Indigo1">Indigo1</string>
+    <string name="Indigo2">Indigo2</string>
     <string name="Violet">Violet</string>
-    <string name="Magenta">Magenta</string>
-
+    <string name="Deep_purple1">Deep Purple1</string>
+    <string name="Deep_purple2">Deep Purple2</string>
+    <string name="Purple1">Purple1</string>
+    <string name="Purple2">Purple2</string>
+    <string name="Pink1">Pink1</string>
+    <string name="Pink2">Pink2</string>
+    <string name="Red1">Red1</string>
+    <string name="Red2">Red2</string>
 </resources>
