@@ -602,15 +602,22 @@ public class Workspace extends PagedView
         if (qsb == null) {
             // In transposed layout, we add the QSB in the Grid. As workspace does not touch the
             // edges, we do not need a full width QSB.
-            qsb = LayoutInflater.from(getContext())
-                    .inflate(R.layout.search_container_workspace,firstPage, false);
+            boolean disabless = Utilities.getPrefs(getContext()).getBoolean("pref_disabless", false);
+            if (!disabless) {
+             qsb = LayoutInflater.from(getContext()).inflate(R.layout.search_container_workspace,firstPage, false);
+            }
         }
 
         CellLayout.LayoutParams lp = new CellLayout.LayoutParams(0, 0, firstPage.getCountX(), 1);
         lp.canReorder = false;
+
+        boolean disabless = Utilities.getPrefs(getContext()).getBoolean("pref_disabless", false);
+        if (!disabless) {
         if (!firstPage.addViewToCellLayout(qsb, 0, R.id.search_container_workspace, lp, true)) {
             Log.e(TAG, "Failed to add to item at (0, 0) to CellLayout");
         }
+        }
+
     }
 
     public void removeAllWorkspaceScreens() {
@@ -2542,16 +2549,14 @@ public class Workspace extends PagedView
                     lp.cellVSpan = item.spanY;
                     lp.isLockedToGrid = true;
 
-                    if (container != LauncherSettings.Favorites.CONTAINER_HOTSEAT &&
-                            cell instanceof LauncherAppWidgetHostView) {
+                    if (cell instanceof LauncherAppWidgetHostView) {
                         final CellLayout cellLayout = dropTargetLayout;
                         // We post this call so that the widget has a chance to be placed
                         // in its final location
 
                         final LauncherAppWidgetHostView hostView = (LauncherAppWidgetHostView) cell;
                         AppWidgetProviderInfo pInfo = hostView.getAppWidgetInfo();
-                        if (pInfo != null && pInfo.resizeMode != AppWidgetProviderInfo.RESIZE_NONE
-                                && !d.accessibleDrag) {
+                        if (pInfo != null && !d.accessibleDrag) {
                             mDelayedResizeRunnable = new Runnable() {
                                 public void run() {
                                     if (!isPageInTransition()) {
@@ -2955,7 +2960,7 @@ public class Workspace extends PagedView
     private boolean setDropLayoutForDragObject(DragObject d, float centerX, float centerY) {
         CellLayout layout = null;
         // Test to see if we are over the hotseat first
-        if (mLauncher.getHotseat() != null && !isDragWidget(d)) {
+        if (mLauncher.getHotseat() != null) {
             if (isPointInSelfOverHotseat(d.x, d.y)) {
                 layout = mLauncher.getHotseat().getLayout();
             }

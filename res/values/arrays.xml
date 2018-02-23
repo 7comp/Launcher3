@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="numHotseatIconsValues">
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
+
+    <string-array name="numGridValues">
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
+
+    <string-array name="numFolderValues">
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="GradientSizeName">
+        <item>@string/size_small</item>
+        <item>@string/size_stock</item>
+        <item>@string/size_big</item>
+        <item>@string/size_biggest</item>
+    </string-array>
+
+    <string-array name="GradientSize">
+        <item>70</item>
+        <item>100</item>
+        <item>150</item>
+        <item>200</item>
+    </string-array>
+
+    <string-array name="IconSizeName">
+        <item>@string/size_smallest</item>
+        <item>@string/size_small</item>
+        <item>@string/size_stock</item>
+        <item>@string/size_big</item>
+        <item>@string/size_biggest</item>
+    </string-array>
+
+    <string-array name="IconSizesValues">
+        <item>50</item>
+        <item>54</item>
+        <item>56</item>
+        <item>58</item>
+        <item>60</item>
+    </string-array>
+
+    <string-array name="IconSizePrName">
+        <item>@string/size_smallest</item>
+        <item>@string/size_small</item>
+        <item>@string/size_stock</item>
+        <item>@string/size_big</item>
+        <item>@string/size_biggest</item>
+    </string-array>
+
+    <string-array name="IconSizesPrValues">
+        <item>90</item>
+        <item>95</item>
+        <item>100</item>
+        <item>105</item>
+        <item>108</item>
+    </string-array>
+
+    <string-array name="DateFormatsName">
+        <item>@string/date_format_1</item>
+        <item>@string/date_format_2</item>
+        <item>@string/date_format_3</item>
+        <item>@string/date_format_4</item>
+        <item>@string/date_format_5</item>
+        <item>@string/date_format_6</item>
+    </string-array>
+
+    <string-array name="DateFormatsValues">
+        <item>EEEEMMMd</item>
+        <item>EEEE</item>
+        <item>EEMMMMd</item>
+        <item>EEMMМd</item>
+        <item>EEEEd</item>
+        <item>EEEEMMMMd</item>
+    </string-array>
+
+    <string-array name="ThemeName">
+        <item>@string/white_theme</item>
+        <item>@string/white_withdarktext_theme</item>
+        <item>@string/dark_theme</item>
+        <item>@string/black_theme</item>
+    </string-array>
+
+    <string-array name="ThemeValues">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <string-array name="MarginSizeName">
+        <item>@string/edgemarginstock</item>
+        <item>@string/edgemarginsmall</item>
+        <item>@string/diabledgemargin</item>
+    </string-array>
+
+    <string-array name="MarginSize">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="ColorValues">
+        <item>#FFFFFF</item>
+        <item>#000000</item>
+        <item>#444444</item>
+        <item>#FF007F</item>
+        <item>#FF0000</item>
+        <item>#FF7F00</item>
+        <item>#FFFF00</item>
+        <item>#7FFF00</item>
+        <item>#00FF00</item>
+        <item>#00FF7F</item>
+        <item>#00FFFF</item>
+        <item>#007FFF</item>
+        <item>#0000FF</item>
+        <item>#7F00FF</item>
+        <item>#FF00FF</item>
+    </string-array>
+
+    <string-array name="ColorNames">
+        <item>@string/White</item>
+        <item>@string/Black</item>
+        <item>@string/Gray</item>
+        <item>@string/Bright_pink</item>
+        <item>@string/Red</item>
+        <item>@string/Orange</item>
+        <item>@string/Уellow</item>
+        <item>@string/Сhartreuse</item>
+        <item>@string/Green</item>
+        <item>@string/Spring_green</item>
+        <item>@string/Cyan</item>
+        <item>@string/Azure</item>
+        <item>@string/Blue</item>
+        <item>@string/Violet</item>
+        <item>@string/Magenta</item>
+    </string-array>
+</resources>

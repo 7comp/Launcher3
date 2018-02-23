@@ -71,6 +71,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -215,6 +216,8 @@ public class Launcher extends BaseActivity
     @Thunk LauncherStateTransitionAnimation mStateTransitionAnimation;
 
     private boolean mIsSafeModeEnabled;
+
+    private boolean restart;
 
     public static final int EXIT_SPRINGLOADED_MODE_SHORT_TIMEOUT = 500;
     private static final int ON_ACTIVITY_RESULT_ANIMATION_DELAY = 500;
@@ -949,6 +952,11 @@ public class Launcher extends BaseActivity
             Log.v(TAG, "Launcher.onResume()");
         }
 
+        if (restart) {
+            restart = false;
+            Utilities.restartLauncher(getApplicationContext());
+        }
+
         if (mLauncherCallbacks != null) {
             mLauncherCallbacks.preOnResume();
         }
@@ -1054,6 +1062,8 @@ public class Launcher extends BaseActivity
             mLauncherCallbacks.onResume();
         }
 
+        mWidgetsButton.setVisibility(Utilities.isWorkspaceEditAllowed(getApplicationContext()) ?
+                View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -1322,6 +1332,14 @@ public class Launcher extends BaseActivity
 
     private void setupOverviewPanel() {
         mOverviewPanel = (ViewGroup) findViewById(R.id.overview_panel);
+
+        // Long-clicking buttons in the overview panel does the same thing as clicking them.
+        OnLongClickListener performClickOnLongClick = new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return v.performClick();
+            }
+        };
 
         // Bind wallpaper button actions
         View wallpaperButton = findViewById(R.id.wallpaper_button);
@@ -2532,11 +2550,15 @@ public class Launcher extends BaseActivity
      * on the home screen.
      */
     public void onClickSettingsButton(View v) {
+        if (mWorkspace.isInOverviewMode()) {
+            showWorkspace(false);
+        }
         if (LOGD) Log.d(TAG, "onClickSettingsButton");
         Intent intent = new Intent(Intent.ACTION_APPLICATION_PREFERENCES)
                 .setPackage(getPackageName());
         intent.setSourceBounds(getViewBounds(v));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        showWorkspace(false);
         startActivity(intent, getActivityLaunchOptions(v));
     }
 
@@ -4029,6 +4051,13 @@ public class Launcher extends BaseActivity
         return ((Launcher) ((ContextWrapper) context).getBaseContext());
     }
 
+    public void needRestart() {
+        if (mPaused)
+            restart = true;
+        else
+            Utilities.restartLauncher(getApplicationContext());
+    }
+
     private class RotationPrefChangeHandler implements OnSharedPreferenceChangeListener {
 
         @Override
@@ -4037,6 +4066,115 @@ public class Launcher extends BaseActivity
             if (Utilities.ALLOW_ROTATION_PREFERENCE_KEY.equals(key)) {
                 // Recreate the activity so that it initializes the rotation preference again.
                 recreate();
+            }
+            if (Utilities.GOOGLEBAR_INAPPMENU_PREFERENCE_KEY.equals(key)) {
+                // Recreate the activity so that it initializes the rotation preference again.
+                recreate();
+            }
+            if (Utilities.TRANSPARENTQSB.equals(key)) {
+                // Recreate the activity so that it initializes the rotation preference again.
+                recreate();
+            }
+            if (Utilities.FORCECOLURLOGO_PREFERENCE_KEY.equals(key)) {
+                // Recreate the activity so that it initializes the rotation preference again.
+                recreate();
+            }
+            if (Utilities.MIC_PREFERENCE_KEY.equals(key)) {
+                // Recreate the activity so that it initializes the rotation preference again.
+                recreate();
+            }
+            if (Utilities.ROWSHOME.equals(key)) {
+                needRestart();
+            }
+            if (Utilities.COLSHOME.equals(key)) {
+                needRestart();
+            }
+            if (Utilities.HOTSEATICONS.equals(key)) {
+                needRestart();
+            }
+            if (Utilities.SMALLALAPPS.equals(key)) {
+                recreate();
+            }
+            if (Utilities.ADDCOLOUMNALLAPP.equals(key)) {
+                needRestart();
+            }
+            if (Utilities.COLORQSBALLAPPS.equals(key)) {
+                recreate();
+            }
+            if (Utilities.EDGEMARGIN.equals(key)) {
+                needRestart();
+            }
+            if (Utilities.KEY_PREF_HOTSEAT_SHOW_ARROW.equals(key)) {
+                needRestart();
+            }
+            if (Utilities.KEY_PREF_HOTSEAT_SHOW_PAGE_INDICATOR.equals(key)) {
+                needRestart();
+            }
+            if (Utilities.DISABLEGRADIENT_PREFERENCE_KEY.equals(key)) {
+                recreate();
+            }
+            if (Utilities.GRADIENTSIZE.equals(key)) {
+                recreate();
+            }
+            if (Utilities.KEY_SHOW_DESKTOP_LABELS.equals(key)) {
+                // Recreate the activity so that it initializes the rotation preference again.
+                recreate();
+            }
+            if (Utilities.KEY_SHOW_DRAWER_LABELS.equals(key)) {
+                // Recreate the activity so that it initializes the rotation preference again.
+                recreate();
+            }
+            if (Utilities.KEY_SHOW_FOLDER_LABELS.equals(key)) {
+                // Recreate the activity so that it initializes the rotation preference again.
+                recreate();
+            }
+            if (Utilities.COLFOLDER.equals(key)) {
+                needRestart();
+            }
+            if (Utilities.ROWFOLDER.equals(key)) {
+                needRestart();
+            }
+            if (Utilities.MINUSFONT.equals(key)) {
+                needRestart();
+            }
+            if (Utilities.MINUSFONTALLAPP.equals(key)) {
+                needRestart();
+            }
+            if (Utilities.ICONSIZE.equals(key)) {
+                needRestart();
+            }
+            if (Utilities.KEY_DISABLE_SMARTSPASE.equals(key)) {
+                needRestart();
+            }
+            if (Utilities.KEY_DESK_COLOUR.equals(key)) {
+                recreate();
+            }
+            if (Utilities.KEY_DESK_CAN_CHANGE_COLOUR.equals(key)) {
+                recreate();
+            }
+            if (Utilities.KEY_DRAWER_COLOUR.equals(key)) {
+                recreate();
+            }
+            if (Utilities.KEY_DRAWER_CAN_CHANGE_COLOUR.equals(key)) {
+                recreate();
+            }
+            if (Utilities.KEY_FOLDER_COLOUR.equals(key)) {
+                recreate();
+            }
+            if (Utilities.KEY_FOLDER_CAN_CHANGE_COLOUR.equals(key)) {
+                recreate();
+            }
+            if (Utilities.KEY_QSB_CAN_CHANGE_COLOUR.equals(key)) {
+                recreate();
+            }
+            if (Utilities.KEY_QSB_COLOUR.equals(key)) {
+                recreate();
+            }
+            if (Utilities.CHANGETHEME_PREFERENCE_KEY.equals(key)) {
+                recreate();
+            }
+            if (Utilities.DRAWER_ICONSIZE.equals(key)) {
+                needRestart();
             }
         }
     }

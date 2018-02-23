@@ -11,6 +11,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -18,12 +19,15 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceScreen;
 import android.preference.TwoStatePreference;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherModel;
+import com.android.launcher3.MultiSelectRecyclerViewActivity;
 import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.util.LooperExecutor;
@@ -85,7 +89,27 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
             mIconPackPref = (CustomIconPreference) findPreference(ICON_PACK_PREF);
             mIconPackPref.setOnPreferenceChangeListener(this);
 
+            Preference hiddenApp = findPreference(Utilities.KEY_HIDDEN_APPS);
+            hiddenApp.setOnPreferenceClickListener(this);
+
+            Preference reboot = findPreference(Utilities.KEY_REBOOT);
+            reboot.setOnPreferenceClickListener(this);
+
+            Preference forgot = findPreference(Utilities.KEY_ABOUT_FORGOT);
+            forgot.setOnPreferenceClickListener(this);
+
             findPreference(SHOW_PREDICTIONS_PREF).setOnPreferenceChangeListener(this);
+
+            if (Utilities.ATLEAST_NOUGAT) {
+                getPreferenceScreen().findPreference("pref_DateFormats").setEnabled(true);
+                getPreferenceScreen().findPreference("pref_allappqsb_color").setEnabled(true);
+            }
+            if (Utilities.ATLEAST_OREO) {
+                getPreferenceScreen().findPreference("pref_override_icon_shape").setEnabled(true);
+            }
+            if (Utilities.ATLEAST_MARSHMALLOW) {
+                getPreferenceScreen().findPreference("pref_icon_badging").setEnabled(true);
+            }
         }
 
         private String getDisplayGoogleTitle() {
@@ -170,9 +194,38 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
                 SmartspaceController.get(mContext).cZ();
                 return true;
             }
+            if (Utilities.KEY_HIDDEN_APPS.equals(preference.getKey())) {
+                Intent intent = new Intent(getActivity(), MultiSelectRecyclerViewActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            if (Utilities.KEY_REBOOT.equals(preference.getKey())) {
+                android.os.Process.killProcess(android.os.Process.myPid());
+                return true;
+            }
+            if (Utilities.KEY_ABOUT_FORGOT.equals(preference.getKey())) {
+                SharedPreferences devicePrefs = Utilities.getPrefs(mContext);
+                devicePrefs.edit().putInt("key_ee", devicePrefs.getInt("key_ee", 0) + 1).apply();
+                int i = devicePrefs.getInt("key_ee", 0);
+                if (i <= 5) {
+                    Toast toast = Toast.makeText(mContext,R.string.forgot,Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                if (i >= 5 && i <= 14) {
+                    Toast toast = Toast.makeText(mContext,String.valueOf(i) + "/15",Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                if (i == 15) {
+                    Toast toast = Toast.makeText(mContext,R.string.ee,Toast.LENGTH_LONG);
+                    devicePrefs.edit().putInt("key_ee", 0).apply();
+                    toast.show();
+                }
+                return true;
+            }
             return false;
         }
     }
+
 
     public static class SuggestionConfirmationFragment extends DialogFragment implements DialogInterface.OnClickListener {
         public void onClick(final DialogInterface dialogInterface, final int n) {

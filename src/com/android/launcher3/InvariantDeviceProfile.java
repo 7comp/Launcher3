@@ -18,6 +18,7 @@ package com.android.launcher3;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
@@ -63,6 +64,7 @@ public class InvariantDeviceProfile {
      */
     public int numRows;
     public int numColumns;
+    public int numColumnsAll;
 
     /**
      * The minimum number of predicted apps in all apps.
@@ -75,6 +77,7 @@ public class InvariantDeviceProfile {
      */
     public int numFolderRows;
     public int numFolderColumns;
+    public float iconAllAppSize;
     public float iconSize;
     public float landscapeIconSize;
     public int iconBitmapSize;
@@ -142,17 +145,24 @@ public class InvariantDeviceProfile {
         InvariantDeviceProfile interpolatedDeviceProfileOut =
                 invDistWeightedInterpolate(minWidthDps,  minHeightDps, closestProfiles);
 
+        SharedPreferences prefs = Utilities.getPrefs(context.getApplicationContext());
+
         InvariantDeviceProfile closestProfile = closestProfiles.get(0);
-        numRows = closestProfile.numRows;
-        numColumns = closestProfile.numColumns;
-        numHotseatIcons = closestProfile.numHotseatIcons;
+        numRows = Integer.valueOf(prefs.getString("pref_numRows", "4")) +1;
+        numColumns = Integer.valueOf(prefs.getString("pref_numCols", "5"));
+        boolean a = prefs.getBoolean("pref_addcoloumnallapp", false);
+        if (!a) {
+            numColumnsAll = numColumns;
+        }
+        else numColumnsAll = numColumns + 1;
+        numHotseatIcons = Integer.valueOf(prefs.getString("pref_numHotseatIcons", "5"));
         defaultLayoutId = closestProfile.defaultLayoutId;
         demoModeLayoutId = closestProfile.demoModeLayoutId;
-        numFolderRows = closestProfile.numFolderRows;
-        numFolderColumns = closestProfile.numFolderColumns;
+        numFolderRows = Integer.valueOf(prefs.getString("pref_numFolderRows", "4"));
+        numFolderColumns = Integer.valueOf(prefs.getString("pref_numFolderCols", "4"));
         minAllAppsPredictionColumns = closestProfile.minAllAppsPredictionColumns;
-
-        iconSize = interpolatedDeviceProfileOut.iconSize;
+        iconSize = Integer.valueOf(prefs.getString("pref_IconSize", "56"));
+        iconAllAppSize = 56;
         landscapeIconSize = interpolatedDeviceProfileOut.landscapeIconSize;
         iconBitmapSize = Utilities.pxFromDp(iconSize, dm);
         iconTextSize = interpolatedDeviceProfileOut.iconTextSize;

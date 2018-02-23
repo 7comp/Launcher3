@@ -125,6 +125,7 @@ public class DeviceProfile {
 
     public int hotseatBarRightNavBarLeftPaddingPx;
     public int hotseatBarRightNavBarRightPaddingPx;
+    public int hotseaSizePx;
 
     // All apps
     public int allAppsCellHeightPx;
@@ -132,6 +133,7 @@ public class DeviceProfile {
     public int allAppsNumPredictiveCols;
     public int allAppsButtonVisualSize;
     public int allAppsIconSizePx;
+    public int iconAllAppSizePx;
     public int allAppsIconDrawablePaddingPx;
     public float allAppsIconTextSizePx;
 
@@ -155,6 +157,7 @@ public class DeviceProfile {
     public DeviceProfile(Context context, InvariantDeviceProfile inv,
             Point minSize, Point maxSize,
             int width, int height, boolean isLandscape) {
+        int edgeMarginPx1 = 0;
 
         this.inv = inv;
         this.isLandscape = isLandscape;
@@ -180,14 +183,23 @@ public class DeviceProfile {
         ComponentName cn = new ComponentName(context.getPackageName(),
                 this.getClass().getName());
         defaultWidgetPadding = AppWidgetHostView.getDefaultPaddingForWidget(context, cn, null);
-        edgeMarginPx = res.getDimensionPixelSize(R.dimen.dynamic_grid_edge_margin);
+
+        int marginsize = Integer.valueOf(Utilities.getPrefs(context).getString("pref_marginsize", "1"));
+        if (marginsize == 1) edgeMarginPx1 = res.getDimensionPixelSize(R.dimen.dynamic_grid_edge_margin);
+        if (marginsize == 2) edgeMarginPx1 = res.getDimensionPixelSize(R.dimen.dynamic_grid_edge_margin_small);
+        if (marginsize == 3) edgeMarginPx1 = res.getDimensionPixelSize(R.dimen.dynamic_grid_edge_margin_disabled);
+
+        edgeMarginPx = edgeMarginPx1;
         desiredWorkspaceLeftRightMarginPx = isVerticalBarLayout() ? 0 : edgeMarginPx;
         cellLayoutPaddingLeftRightPx =
                 res.getDimensionPixelSize(R.dimen.dynamic_grid_cell_layout_padding);
         cellLayoutBottomPaddingPx =
                 res.getDimensionPixelSize(R.dimen.dynamic_grid_cell_layout_bottom_padding);
-        pageIndicatorSizePx = res.getDimensionPixelSize(
-                R.dimen.dynamic_grid_min_page_indicator_size);
+        boolean a = Utilities.getPrefs(context).getBoolean("pref_hotseatShowArrow", true);
+        if (a) {
+            pageIndicatorSizePx = res.getDimensionPixelSize(R.dimen.dynamic_grid_min_page_indicator_size);
+        }
+        else pageIndicatorSizePx = 0;
         pageIndicatorLandLeftNavBarGutterPx = res.getDimensionPixelSize(
                 R.dimen.dynamic_grid_page_indicator_land_left_nav_bar_gutter_width);
         pageIndicatorLandRightNavBarGutterPx = res.getDimensionPixelSize(
@@ -353,8 +365,11 @@ public class DeviceProfile {
 
     private void updateIconSize(float scale, Resources res, DisplayMetrics dm) {
         // Workspace
+
         float invIconSizePx = isVerticalBarLayout() ? inv.landscapeIconSize : inv.iconSize;
+        float inviconAllAppSizePx = inv.iconAllAppSize;
         iconSizePx = (int) (Utilities.pxFromDp(invIconSizePx, dm) * scale);
+        iconAllAppSizePx = (int) (Utilities.pxFromDp(inviconAllAppSizePx, dm) * scale);
         iconTextSizePx = (int) (Utilities.pxFromSp(inv.iconTextSize, dm) * scale);
         iconDrawablePaddingPx = (int) (iconDrawablePaddingOriginalPx * scale);
 
@@ -373,9 +388,9 @@ public class DeviceProfile {
 
         // All apps
         allAppsIconTextSizePx = iconTextSizePx;
-        allAppsIconSizePx = iconSizePx;
+        allAppsIconSizePx = iconAllAppSizePx;
         allAppsIconDrawablePaddingPx = iconDrawablePaddingPx;
-        allAppsCellHeightPx = getCellSize().y;
+        allAppsCellHeightPx = getCellSize().y +iconDrawablePaddingPx;
 
         if (isVerticalBarLayout()) {
             // Always hide the Workspace text with vertical bar layout.

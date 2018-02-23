@@ -12,7 +12,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Rect;
+import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -63,8 +65,22 @@ public class HotseatQsbWidget extends AbstractQsbLayout {
     }
 
     private void setColors() {
+        boolean forcecolour = Utilities.getPrefs((getContext())).getBoolean("pref_forcecolourlogo", false);
+        boolean transparentqsb = Utilities.getPrefs((getContext())).getBoolean("pref_transparentqsbqsb", true);
+        boolean customqsbcolour = Utilities.getPrefs((getContext())).getBoolean("pref_customqsbcolour", false);
         View.inflate(new ContextThemeWrapper(getContext(), mIsDefaultLiveWallpaper ? R.style.HotseatQsbTheme_Colored : R.style.HotseatQsbTheme), R.layout.qsb_hotseat_content, this);
         bz(mIsDefaultLiveWallpaper ? 0xCCFFFFFF : 0x99FAFAFA);
+        if (transparentqsb && !forcecolour) bz(0x99FAFAFA);
+        if (!transparentqsb && forcecolour) bz(0xFFFFFFFF);
+        if (customqsbcolour){
+        SharedPreferences prefs = Utilities.getPrefs((getContext()).getApplicationContext());
+        int qsbcolor = Color.parseColor(prefs.getString("pref_qsb_color", "0xFFFFFF"));
+        if (transparentqsb) {
+            int colorwithtransparent = ColorUtils.setAlphaComponent(qsbcolor, 204);
+            bz(colorwithtransparent);
+        }
+        else bz(qsbcolor);
+        }
     }
 
     private void openQSB() {
@@ -107,6 +123,10 @@ public class HotseatQsbWidget extends AbstractQsbLayout {
 
     private boolean isDefaultLiveWallpaper() {
         WallpaperInfo wallpaperInfo = WallpaperManager.getInstance(getContext()).getWallpaperInfo();
+        boolean forcecolour = Utilities.getPrefs((getContext())).getBoolean("pref_forcecolourlogo", false);
+        if (forcecolour) {
+            return forcecolour;
+        }
         return wallpaperInfo != null && wallpaperInfo.getComponent().flattenToString().equals(getContext().getString(R.string.default_live_wallpaper));
     }
 
