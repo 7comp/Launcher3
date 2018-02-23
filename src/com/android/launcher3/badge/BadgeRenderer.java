@@ -130,14 +130,15 @@ public class BadgeRenderer {
         int backgroundWithShadowSize = backgroundWithShadow.getHeight(); // Same as width.
         boolean shouldStack = !isDot && badgeInfo != null
                 && badgeInfo.getNotificationKeys().size() > 1;
-        if (shouldStack) {
+         //Here enabling this will create stacked numaric dots which is practically helpful but not lookwise so i disabled this ,also this would only work with numeric dots.
+       /* if (shouldStack) {
             int offsetDiffX = mStackOffsetX - mOffset;
             int offsetDiffY = mStackOffsetY - mOffset;
             canvas.translate(offsetDiffX, offsetDiffY);
             canvas.drawBitmap(backgroundWithShadow, -backgroundWithShadowSize / 2,
                     -backgroundWithShadowSize / 2, mBackgroundPaint);
             canvas.translate(-offsetDiffX, -offsetDiffY);
-        }
+        }*/
 
         if (isText) {
             canvas.drawBitmap(backgroundWithShadow, -backgroundWithShadowSize / 2,
